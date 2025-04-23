@@ -17,5 +17,4 @@ class RegisterForm(forms.ModelForm):
 
         if password and password_confirm and password != password_confirm:
             raise forms.ValidationError("Passwords do not match")
-
         return cleaned_data

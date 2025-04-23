@@ -9,10 +9,10 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)  # Do not save immediately
-            user.set_password(form.cleaned_data["password"])  # Hash password
+            user = form.save(commit=False)  
+            user.set_password(form.cleaned_data["password"])
             user.save()
-            return redirect("user_login")  # Redirect to login page after registration
+            return redirect("user_login") 
     else:
         form = RegisterForm()
     return render(request, "authentication_app/register.html", {"form": form})
@@ -25,7 +25,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')  # Redirect to dashboard after login
+            return redirect('dashboard')  
         else:
             return render(request, "authentication_app/login.html", {"error": "Invalid credentials"})
 
@@ -34,9 +34,9 @@ def user_login(request):
 # Logout View
 def user_logout(request):
     logout(request)
-    return redirect("user_login")  # Redirect to login after logout
+    return redirect("user_login")  
 
-# Dashboard View (Protected)
+
 @login_required(login_url='user_login') 
 def dashboard(request):
     return render(request, "authentication_app/dashboard.html", {"username": request.user.username})
